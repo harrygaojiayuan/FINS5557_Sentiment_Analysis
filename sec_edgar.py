@@ -11,7 +11,7 @@ import time
 from dataclasses import dataclass
 
 import requests
-from . import config
+import config
 
 tickers_url = 'https://www.sec.gov/files/company_tickers.json'
 submissions_url = 'https://data.sec.gov/submissions/CIK{cik:010d}.json'
@@ -32,7 +32,7 @@ class Filing:
     ticker: str
     form: str
     accession: str
-    filling_date: str
+    filing_date: str
     report_date: str
     primary_doc: str
 
@@ -58,7 +58,7 @@ def _get(url: str) -> requests.Response:
         time.sleep(wait)
     try:
         resp = requests.get(
-            url, headers={"User-Agent": config.SEC_USER_AGENT}, timeout=30 # Get from specified URL using the SEC_USER_AGENT in the config.py which is specified in the .env. Exit if not done within 30 seconds
+            url, headers={"User-Agent": config.sec_user_agent}, timeout=30 # Get from specified URL using the SEC_USER_AGENT in the config.py which is specified in the .env. Exit if not done within 30 seconds
         )
         _last_request_time = time.time() # Update request time for the next get
         resp.raise_for_status()
@@ -128,3 +128,14 @@ def list_10q_filings(ticker: str, limit: int = 12) -> list[Filing]:
 def fetch_filing_html(filing: Filing) -> str:
     """Download the primary 10-Q document (HTML) for a filing."""
     return _get(filing.document_url).text
+
+if __name__ == "__main__":
+    cik, company = ticker_to_cik("AAPL")
+    print(f"ticker_to_cik: CIK {cik}: {company}")
+
+    filings = list_10q_filings("AAPL", limit=3)
+    for filing in filings:
+        print(f"list_10q_filings:{filing.label}")
+
+    html = fetch_filing_html(filings[0])
+    print(f"fetch_filing_html: {len(html):,} chars")
