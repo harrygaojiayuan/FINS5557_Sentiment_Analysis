@@ -162,6 +162,10 @@ _ABBREVIATIONS = [
     "Mr.", "Ms.", "Dr.", "vs.", "approx.", "e.g.", "i.e.", "et al.",
 ]
 
+# Realised headings are cut into sentences.
+# Heading normally do not contain terminal punctuations
+_SENTENCE_END = re.compile(r"[.!?][\"”’')\]]*$")
+
 
 def extract_sentences(text: str, min_words: int = 5, max_chars: int = 600) -> list[str]:
     """Split section text into sentences suitable for FinBERT scoring.
@@ -180,6 +184,8 @@ def extract_sentences(text: str, min_words: int = 5, max_chars: int = 600) -> li
         for i, abbr in enumerate(_ABBREVIATIONS):
             piece = piece.replace(f"\x00{i}\x00", abbr)
         sentence = piece.strip()
+        if not _SENTENCE_END.search(sentence): # Excluding sentences with no terminal punctuations
+            continue
         if len(sentence) > max_chars:
             sentence = sentence[:max_chars].rsplit(" ", 1)[0] + "…"
         words = re.findall(r"[A-Za-z]{2,}", sentence)
