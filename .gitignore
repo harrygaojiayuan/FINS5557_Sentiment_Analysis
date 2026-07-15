@@ -12,3 +12,4 @@ venv/
 .cache/
 *.log
 
+test_result/

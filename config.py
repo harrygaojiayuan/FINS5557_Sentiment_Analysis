@@ -10,7 +10,11 @@ load_dotenv()
 # User Agent is also required to be decleared to identify the requester
 
 sec_user_agent = os.getenv(
-    'SEC_USER_AGENT', # read SEC_USER_AGENT in env
-    'FINS5557 Project contact@example.com' # Default value if SEC_USER_AGENT is blank
+    'SEC_USER_AGENT', # read SEC_USER_AGENT in .env
+    'FINS5557 Project contact@example.com' # Default value if SEC_USER_AGENT is blank in .env
 )
 
+SENTIMENT_MODEL = os.getenv(
+    "SENTIMENT_MODEL", # read SENTIMENT_MODEL in .env
+    "ProsusAI/finbert", # Default model if SENTIMENT_MODEL is blank in .env
+)

@@ -130,12 +130,48 @@ def fetch_filing_html(filing: Filing) -> str:
     return _get(filing.document_url).text
 
 if __name__ == "__main__":
-    cik, company = ticker_to_cik("AAPL")
-    print(f"ticker_to_cik: CIK {cik}: {company}")
+    import json
+    from datetime import datetime, timezone
+    from pathlib import Path
 
-    filings = list_10q_filings("AAPL", limit=3)
-    for filing in filings:
-        print(f"list_10q_filings:{filing.label}")
+    TICKER = "AAPL"
+    RESULTS_DIR = Path(__file__).resolve().parent / "test_result" / "sec_edgar"
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    html = fetch_filing_html(filings[0])
-    print(f"fetch_filing_html: {len(html):,} chars")
+    print(f"1/3 ticker_to_cik({TICKER!r})...")
+    cik, company = ticker_to_cik(TICKER)
+    print(f"    CIK {cik} — {company}")
+
+    print("2/3 list_10q_filings...")
+    filings = list_10q_filings(TICKER, limit=8)
+    for f in filings:
+        print(f"    {f.label}")
+
+    print("3/3 fetch_filing_html (latest)...")
+    latest = filings[0]
+    html = fetch_filing_html(latest)
+    print(f"    {len(html):,} chars from {latest.document_url}")
+
+    result = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "ticker": latest.ticker,
+        "cik": cik,
+        "company": company,
+        "latest_html_chars": len(html),
+        "filings": [
+            {
+                "form": f.form,
+                "accession": f.accession,
+                "filing_date": f.filing_date,
+                "report_date": f.report_date,
+                "document_url": f.document_url,
+            }
+            for f in filings
+        ],
+    }
+    out = RESULTS_DIR / f"{latest.ticker}_filings.json"
+    out.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    html_out = RESULTS_DIR / f"{latest.ticker}_{latest.report_date}.htm"
+    html_out.write_text(html, encoding="utf-8")
+    print(f"\nSaved: {out}\nSaved: {html_out}")

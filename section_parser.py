@@ -23,7 +23,7 @@ _ITEM_PREFIX = r"item\s*{num}\s*[.:\-–—]?\s*"
 SECTION_SPECS: list[dict] = [
     {
         "key": "financial_statements",
-        "title": "Part I, Item 1 — Financial Statements",
+        "title": "Part  I, Item  1 — Financial Statements",
         "item": _ITEM_PREFIX.format(num="1")
         + r"(?:condensed\s+)?(?:consolidated\s+)?financial\s+statements",
         "fallback": r"(?:condensed\s+)?(?:consolidated\s+)?financial\s+statements(?:\s*\(unaudited\))?",
@@ -31,28 +31,28 @@ SECTION_SPECS: list[dict] = [
     },
     {
         "key": "mdna",
-        "title": "Part I, Item 2 — Management's Discussion & Analysis",
+        "title": "Part  I, Item  2 — Management's Discussion & Analysis",
         "item": _ITEM_PREFIX.format(num="2") + r"management[’']?s?\s+discussion",
         "fallback": r"management[’']?s?\s+discussion\s+and\s+analysis.{0,80}",
         "anchor": "first",
     },
     {
         "key": "market_risk",
-        "title": "Part I, Item 3 — Market Risk Disclosures",
+        "title": "Part  I, Item  3 — Market Risk Disclosures",
         "item": _ITEM_PREFIX.format(num="3") + r"quantitative\s+and\s+qualitative",
         "fallback": r"quantitative\s+and\s+qualitative\s+disclosures.{0,40}",
         "anchor": "first",
     },
     {
         "key": "controls",
-        "title": "Part I, Item 4 — Controls and Procedures",
+        "title": "Part  I, Item  4 — Controls and Procedures",
         "item": _ITEM_PREFIX.format(num="4") + r"controls\s+and\s+procedures",
         "fallback": None,
         "anchor": "first",
     },
     {
         "key": "legal",
-        "title": "Part II, Item 1 — Legal Proceedings",
+        "title": "Part II, Item  1 — Legal Proceedings",
         "item": _ITEM_PREFIX.format(num="1") + r"legal\s+proceedings",
         "fallback": None,
         "anchor": "last",
@@ -198,30 +198,47 @@ def extract_sentences(text: str, min_words: int = 5, max_chars: int = 600) -> li
     return sentences
 
 if __name__ == "__main__":
+    import json
+    from datetime import datetime, timezone
+    from pathlib import Path
+
     from sec_edgar import fetch_filing_html, list_10q_filings
 
-    # Fetch Apple's latest 10-Q
-    filing = list_10q_filings("AAPL", limit=1)[0]
-    print(f"Testing: {filing.label}")
-    print(f"URL: {filing.document_url}")
+    TICKER = "AAPL"
+    RESULTS_DIR = Path(__file__).resolve().parent / "test_result" / "section_parser"
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Parse the filing
+    print(f"1/3 Fetching latest 10-Q for {TICKER}...")
+    filing = list_10q_filings(TICKER, limit=1)[0]
     html = fetch_filing_html(filing)
+    print(f"    {filing.company} — {filing.label} ({len(html):,} chars)")
+
+    print("2/3 html_to_text + split_sections...")
     text = html_to_text(html)
     sections = split_sections(text)
+    print(f"    plain text {len(text):,} chars, {len(sections)} sections found")
 
-    if not sections:
-        raise RuntimeError("No 10-Q sections were found.")
+    print("3/3 extract_sentences per section...\n")
+    print(f"    {'Section':<52} {'Chars':>9} {'Sents':>6}")
+    print("    " + "-" * 70)
 
-    # Display results
-    for key, section_text in sections.items():
-        sentences = extract_sentences(section_text)
+    result = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "ticker": filing.ticker,
+        "company": filing.company,
+        "report_date": filing.report_date,
+        "sections": {},
+    }
+    for key, body in sections.items():
+        sentences = extract_sentences(body)
+        print(f"    {SECTION_TITLES[key]:<52} {len(body):>9,} {len(sentences):>6}")
+        result["sections"][key] = {
+            "title": SECTION_TITLES[key],
+            "char_len": len(body),
+            "n_sentences": len(sentences),
+            "sentences": sentences,
+        }
 
-        print(f"\n{SECTION_TITLES[key]}")
-        print(f"Characters: {len(section_text):,}")
-        print(f"Sentences:  {len(sentences):,}")
-
-        if sentences:
-            print(f"Example: {sentences[0][:200]}")
-
-    print("\nsection_parser test completed successfully.")
+    out = RESULTS_DIR / f"{filing.ticker}_{filing.report_date}_sections.json"
+    out.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"\nSaved: {out}")
