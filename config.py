@@ -51,3 +51,6 @@ def model_for(provider: str) -> str:
         "anthropic": ANTHROPIC_MODEL,
         "openai": OPENAI_MODEL,
     }.get(provider, "")
+
+# Cap FinBERT workload per section if necessary
+MAX_SENTENCES_PER_SECTION = int(os.getenv("MAX_SENTENCES_PER_SECTION", "300"))

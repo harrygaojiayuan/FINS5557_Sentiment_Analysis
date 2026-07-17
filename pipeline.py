@@ -28,7 +28,7 @@ def analyse_filing(
     filing: Filing,
     html: str,
     nlp,
-    max_sentences: int = 300,
+    max_sentences: int = config.MAX_SENTENCES_PER_SECTION,
     progress: Callable[[str], None] = lambda msg: None,
 ) -> dict:
     """Run parse → FinBERT → summarise; return the standard analysis JSON.
