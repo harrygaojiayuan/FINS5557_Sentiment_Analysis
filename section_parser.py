@@ -207,6 +207,7 @@ if __name__ == "__main__":
     TICKER = "AAPL"
     RESULTS_DIR = Path(__file__).resolve().parent / "test_result" / "section_parser"
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    run_ts = datetime.now().strftime("%Y%m%d-%H%M%S")
 
     print(f"1/3 Fetching latest 10-Q for {TICKER}...")
     filing = list_10q_filings(TICKER, limit=1)[0]
@@ -239,6 +240,6 @@ if __name__ == "__main__":
             "sentences": sentences,
         }
 
-    out = RESULTS_DIR / f"{filing.ticker}_{filing.report_date}_sections.json"
+    out = RESULTS_DIR / f"{filing.ticker}_{filing.report_date}_sections_{run_ts}.json"
     out.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\nSaved: {out}")

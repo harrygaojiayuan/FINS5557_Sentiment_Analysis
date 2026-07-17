@@ -137,6 +137,7 @@ if __name__ == "__main__":
     TICKER = "AAPL"
     RESULTS_DIR = Path(__file__).resolve().parent / "test_result" / "sec_edgar"
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    run_ts = datetime.now().strftime("%Y%m%d-%H%M%S")
 
     print(f"1/3 ticker_to_cik({TICKER!r})...")
     cik, company = ticker_to_cik(TICKER)
@@ -169,7 +170,7 @@ if __name__ == "__main__":
             for f in filings
         ],
     }
-    out = RESULTS_DIR / f"{latest.ticker}_filings.json"
+    out = RESULTS_DIR / f"{latest.ticker}_filings_{run_ts}.json"
     out.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
     html_out = RESULTS_DIR / f"{latest.ticker}_{latest.report_date}.htm"

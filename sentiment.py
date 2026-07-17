@@ -131,7 +131,8 @@ if __name__ == "__main__":
     # Anchor output to THIS file's folder, not the working directory,
     # so the path is identical in PyCharm, terminal, and across devices.
     RESULTS_DIR = Path(__file__).resolve().parent / "test_result" / "sentiment"
-    RESULTS_DIR.mkdir(exist_ok=True)
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    run_ts = datetime.now().strftime("%Y%m%d-%H%M%S")
 
     print(f"1/4 Fetching latest 10-Q for {TICKER} from EDGAR...")
     filing = list_10q_filings(TICKER, limit=1)[0]
@@ -175,8 +176,8 @@ if __name__ == "__main__":
         }
         c = agg["counts"]
         tone = (
-            "positive" if agg["net_score"] > 0.05
-            else "negative" if agg["net_score"] < -0.05
+            "positive" if agg.get("weighted_score", agg["net_score"]) > 0.05
+            else "negative" if agg.get("weighted_score", agg["net_score"]) < -0.05
             else "neutral"
         )
         print(
@@ -185,6 +186,6 @@ if __name__ == "__main__":
             f"{c['positive']:>5} {c['neutral']:>5} {c['negative']:>5}   {tone}"
         )
 
-    out_path = RESULTS_DIR / f"{filing.ticker}_{filing.report_date}.json"
-    out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+    out_path = RESULTS_DIR / f"{filing.ticker}_{filing.report_date}_{run_ts}.json"
+    out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False),encoding="utf-8")
     print(f"\nSaved: {out_path}")
