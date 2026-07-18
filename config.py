@@ -30,6 +30,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
 
 
 def active_provider() -> str:

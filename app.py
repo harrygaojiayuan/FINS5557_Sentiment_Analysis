@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 import config
+from market_data import surprise_for_period
 from pipeline import analyse_filing
 from sec_edgar import EdgarError, fetch_filing_html, list_10q_filings
 from sentiment import load_pipeline
@@ -73,13 +74,38 @@ def render_summary(analysis: dict) -> None:
             st.warning(f"{note}Set an LLM API key in .env for LLM summaries.")
 
     assessment = summary.get("overall_assessment", {})
-    left, right = st.columns([1, 3])
+    surprise = analysis.get("earnings_surprise")
+    has_surprise = bool(
+        surprise
+        and surprise.get("estimate") is not None
+        and surprise.get("actual") is not None
+    )
+
+    left, mid, right = st.columns([1, 1, 2])
     with left:
         st.markdown("**Overall tone**")
         st.markdown(f"### {TONE_BADGES.get(assessment.get('tone'), '🟡 Mixed')}")
+    with mid:
+        if has_surprise:
+            pct = surprise.get("surprise_pct")
+            st.markdown("**EPS vs consensus**")
+            if pct is not None:
+                icon = "🟢" if pct > 0 else "🔴" if pct < 0 else "⚪"
+                colour = "green" if pct > 0 else "red" if pct < 0 else "gray"
+                label = "Beat" if pct > 0 else "Miss" if pct < 0 else "In-line"
+                st.markdown(f"### {icon} :{colour}[{label} {pct:+.1f}%]")
+            st.markdown(
+                f"{surprise['actual']:.2f} vs {surprise['estimate']:.2f} est"
+            )
     with right:
         if assessment.get("rationale"):
             st.markdown(f"> {assessment['rationale']}")
+
+    if has_surprise:
+        st.caption(
+            "Market context from Finnhub earnings surprises (street consensus "
+            "basis) — independent of the sentiment model. Not investment advice."
+        )
 
     cols = st.columns(2)
     for i, (key, title) in enumerate(CATEGORY_META):
@@ -232,6 +258,9 @@ def main() -> None:
                 st.write("Loading FinBERT model…")
                 nlp = get_finbert()
                 analysis = analyse_filing(filing, html, nlp, progress=st.write)
+                analysis["earnings_surprise"] = surprise_for_period(
+                    filing.ticker, filing.report_date
+                )
                 status.update(label="Analysis complete", state="complete", expanded=False)
             st.session_state["analysis"] = analysis
         except EdgarError as exc:
