@@ -1,7 +1,7 @@
-"""Use EDGAR APIs to fetch 10-Q fillings of a company:
+"""Use EDGAR APIs to fetch 10-Q filings of a company:
 
 The code fetches tickers, CIK (Central Index Key) from company_tickers.json on sec.gov
-Then use the CIK to fetch filling history though data.sec.gov/submissions/CIK##########.json
+Then use the CIK to fetch filing history through data.sec.gov/submissions/CIK##########.json
 
 """
 
@@ -48,7 +48,7 @@ class Filing:
     @property
     def label(self) -> str:
         """Return the label for this filing"""
-        return f"{self.form} — period {self.report_date} (filed {self.filing_date})" # Return in the format of 'Form Type' - 'Report Date' ('filling date')
+        return f"{self.form} — period {self.report_date} (filed {self.filing_date})" # Return in the format of 'Form Type' - 'Report Date' ('filing date')
 
 def _get(url: str) -> requests.Response:
     """GET with EDGAR-compliant headers, throttling, and readable errors."""
