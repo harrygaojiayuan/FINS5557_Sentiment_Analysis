@@ -84,6 +84,9 @@ SYSTEM_PROMPT = (
     + "\nRules: 3-5 entries per list; each 'evidence' value must be a short "
     "verbatim quote from the filing text provided; "
     "inside string values replace any double quotes from the source text with single quotes; "
+    "the overall_assessment must adopt the deterministic overall tone "
+    "provided in the input, and its rationale must explain the drivers "
+    "behind that tone (offsetting factors may be noted); "
     "base every point strictly on that text; "
     "if a category has no supporting content, return an empty list for it. "
     "Do not give investment advice."
@@ -93,10 +96,30 @@ SYSTEM_PROMPT = (
 class SummaryError(Exception):
     """Raised when the LLM response cannot be parsed into the schema."""
 
+_PROMPT_POOL = 300_000
+_SECTION_FLOOR = 10_000
+
+
+def _allocate_budgets(sections_text: dict[str, str]) -> dict[str, int]:
+    """Adaptive per-section prompt budgets: guarantee a floor for every
+    section, then distribute the remaining pool proportionally to length.
+    When the whole filing fits in the pool, nothing is truncated at all."""
+    lengths = {k: len(t) for k, t in sections_text.items()}
+    if sum(lengths.values()) <= _PROMPT_POOL:
+        return lengths
+    floors = {k: min(n, _SECTION_FLOOR) for k, n in lengths.items()}
+    spare = _PROMPT_POOL - sum(floors.values())
+    extra_need = {k: lengths[k] - floors[k] for k in lengths}
+    total_extra = sum(extra_need.values())
+    return {
+        k: floors[k]
+        + (spare * extra_need[k] // total_extra if total_extra else 0)
+        for k in lengths
+    }
 
 def build_user_prompt(
     meta: dict, sections_text: dict[str, str],
-    section_analyses: dict[str, dict],char_budget: int = 24000,
+    section_analyses: dict[str, dict],
 ) -> str:
     """Assemble filing context for the LLM within a character budget."""
     lines = [
@@ -115,18 +138,24 @@ def build_user_prompt(
             f"net {agg['net_score']:+.2f}, weighted {agg.get('weighted_score', 0.0):+.2f} "
             f"({agg['n_sentences']} sentences)"
         )
+
+    tone_hint, tone_score = _tone_from_scores(section_analyses)
+    lines.append(
+        f"Deterministic overall tone (FinBERT, MD&A sentence-weighted): "
+        f"{tone_hint} ({tone_score:+.2f})"
+    )
+
     lines.append("")
 
-    remaining = char_budget - sum(len(line) for line in lines)
+    budgets = _allocate_budgets(sections_text)
     for key in _PROMPT_PRIORITY:
         text = sections_text.get(key)
-        if not text or remaining < 500:
+        if not text:
             continue
-        excerpt = text[:remaining]
+        excerpt = text[: budgets[key]]
         lines.append(f"=== {SECTION_TITLES.get(key, key)} ===")
         lines.append(excerpt)
         lines.append("")
-        remaining -= len(excerpt)
     return "\n".join(lines)
 
 
@@ -208,7 +237,7 @@ def _mock_summary(section_analyses: dict[str, dict]) -> dict:
         re.compile(r"\b(due to|driven by|primarily|demand|growth in)\b", re.I),
         3,
     )
-    
+
     tone, mean_net = _tone_from_scores(section_analyses)
 
     return _normalise(
@@ -330,7 +359,13 @@ def generate_summary(
             raw = call_llm(SYSTEM_PROMPT, repair_prompt)
             parsed = _extract_json(raw)
         summary = _normalise(parsed)
-        summary["overall_assessment"]["tone"], _ = _tone_from_scores(section_analyses)
+        tone, mean_score = _tone_from_scores(section_analyses)
+        summary["overall_assessment"]["llm_tone"] = summary["overall_assessment"].get("tone")
+        summary["overall_assessment"]["tone"] = tone
+        summary["overall_assessment"]["tone_basis"] = (
+            f"FinBERT MD&A sentence-weighted score {mean_score:+.2f} "
+            "(thresholds ±0.05)"
+        )
         summary["generated_by"] = f"{provider}:{config.model_for(provider)}"
         return summary
     except Exception as exc:  # noqa: BLE001 — degrade gracefully, never crash the app
