@@ -10,3 +10,5 @@ google-generativeai>=0.8
 streamlit>=1.36
 pandas>=2.0
 plotly>=5.20
+vaderSentiment>=3.3
+pysentiment2>=0.1.1
