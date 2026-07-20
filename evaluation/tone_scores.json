@@ -1,0 +1,50 @@
+[
+  {
+    "ticker": "AAPL",
+    "period": "2026-03-28",
+    "weighted_score": 0.0874,
+    "n_sentences": 84
+  },
+  {
+    "ticker": "MSFT",
+    "period": "2026-03-31",
+    "weighted_score": 0.1716,
+    "n_sentences": 324
+  },
+  {
+    "ticker": "NVDA",
+    "period": "2026-04-26",
+    "weighted_score": 0.1095,
+    "n_sentences": 145
+  },
+  {
+    "ticker": "TSLA",
+    "period": "2026-03-31",
+    "weighted_score": 0.3205,
+    "n_sentences": 125
+  },
+  {
+    "ticker": "NFLX",
+    "period": "2026-06-30",
+    "weighted_score": 0.0714,
+    "n_sentences": 128
+  },
+  {
+    "ticker": "JPM",
+    "period": "2026-03-31",
+    "weighted_score": -0.0017,
+    "n_sentences": 2157
+  },
+  {
+    "ticker": "COST",
+    "period": "2026-05-10",
+    "weighted_score": 0.0381,
+    "n_sentences": 173
+  },
+  {
+    "ticker": "KO",
+    "period": "2026-04-03",
+    "weighted_score": 0.0788,
+    "n_sentences": 295
+  }
+]

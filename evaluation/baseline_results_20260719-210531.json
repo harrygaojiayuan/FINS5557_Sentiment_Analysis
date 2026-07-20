@@ -1,0 +1,328 @@
+{
+  "n": 154,
+  "inter_annotator_full_agreement": 0.591,
+  "FinBERT": {
+    "accuracy": 0.675,
+    "macro_f1": 0.656,
+    "per_class_f1": {
+      "positive": 0.561,
+      "neutral": 0.697,
+      "negative": 0.708
+    }
+  },
+  "VADER": {
+    "accuracy": 0.455,
+    "macro_f1": 0.451,
+    "per_class_f1": {
+      "positive": 0.48,
+      "neutral": 0.424,
+      "negative": 0.449
+    }
+  },
+  "Loughran-McDonald": {
+    "accuracy": 0.468,
+    "macro_f1": 0.429,
+    "per_class_f1": {
+      "positive": 0.212,
+      "neutral": 0.443,
+      "negative": 0.633
+    }
+  },
+  "finbert_right_vader_wrong": [
+    {
+      "sentence": "The information set forth under Note 9 Commitments and Contingencies in the notes to the consolidated financial statements under the caption “Legal Proceedings” is incorporated herein by reference.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "See Note 7, Debt, to the consolidated financial statements included elsewhere in this Quarterly Report on Form 10-Q for further details regarding our debt obligations.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Refer to Part I, Item 1A: Risk Factors on pages 9–31 of JPMorganChase’s 2025 Form 10-K for information on the financial consequences to holders of the Firm’s debt and equity securities in a resolution scenario.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "(b)As permitted under U.S. GAAP, the Firm has elected to net derivative receivables and derivative payables and the related cash collateral receivables and payables when a legally enforceable master netting agreement exists.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "In the three months ended June 30, 2026, the foreign exchange losses were primarily driven by the remeasurement of cash and content liability positions in currencies other than the functional currencies, partially offset by the non-cash gain of $9 million from the remeasurement of our Senior Notes denominated in Euros, net of hedging impacts.",
+      "truth": "negative",
+      "vader": "neutral"
+    },
+    {
+      "sentence": "Refer to Note 12, Related Party Transactions, for additional information regarding the equity investment.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "•for foreign transactions, additional risks related to the integration of operations across different cultures and languages, and the economic, political, and regulatory risks associated with specific countries.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "In addition, this repurchase program and dividend payments will diminish our cash reserves.",
+      "truth": "negative",
+      "vader": "neutral"
+    },
+    {
+      "sentence": "As a result, allowances for doubtful accounts and write-offs of accounts receivable may increase.",
+      "truth": "negative",
+      "vader": "neutral"
+    },
+    {
+      "sentence": "In December 2022, the European Commission issued a Statement of Objections alleging that we tie Facebook Marketplace to Facebook and use data in a manner that infringes European Union competition rules.",
+      "truth": "negative",
+      "vader": "neutral"
+    },
+    {
+      "sentence": "We have recast certain prior period amounts on our consolidated cash flows statements to conform to the current period presentation.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "If too many customers access our websites within a short period of time due to increased demand, we may experience system interruptions that make our websites unavailable or prevent us from efficiently fulfilling orders, which may reduce the volume of goods we offer or sell and the attractiveness of our products and services.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Other than the contractual obligations described in Notes 6 and 10, there were no material changes outside the ordinary course of business in our contractual obligations from those disclosed in our Annual Report on Form 10-K for the fiscal year ended January 25, 2026.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Refer to pages 89–99 of JPMorganChase’s 2025 Form 10-K, Note 21 of this Form 10-Q and the Firm’s Pillar 3 Regulatory Capital Disclosures reports, which are available on the Firm’s website, for a further discussion of the Firm’s capital risk management.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Deferred revenue balances may fluctuate due to the number of paid memberships and the price of our memberships.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "In addition, on May 12, 2023, the IDPC issued a Final Decision concluding that Meta Platforms Ireland's reliance on Standard Contractual Clauses in respect of certain transfers of European Economic Area (EEA) Facebook user data was not in compliance with the GDPR.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The Company’s policy is focused on the preservation of capital, liquidity and return.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Many of these laws and regulations are subject to change and uncertain interpretation, and could result in claims, changes to our products and business practices, monetary penalties, increased cost of operations, or declines in user growth or engagement, or otherwise harm our business.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Certain assets and liabilities are measured at fair value on a nonrecurring basis, including certain mortgage, home equity and other loans, where the carrying value is based on the fair value of the underlying collateral.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Our effective tax rate can be more or less volatile based on the amount of pre-tax income or loss.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "For example, production costs are paid as the content is created, well in advance of when the content is available on the service and amortized.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Diluted EPS is computed by dividing net income by the weighted-average number of fully diluted common stock outstanding and assumes the conversion of our Class B common stock to Class A common stock.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Total Investment commitments were $27 billion as of April 26, 2026, subject to certain contingencies, which we expect will be made through the remainder of fiscal year 2027.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Stock repurchases may be effected through open market repurchases in compliance with Rule 10b-18 under the Exchange Act, including through the use of trading plans intended to qualify under Rule 10b5-1 under the Exchange Act, privately-negotiated transactions, accelerated stock repurchase plans, block purchases, or other similar purchase techniques and in such amounts as management deems appropriate.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "These totals include all vested and unvested stock awards outstanding, including those awards we estimate will be forfeited.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "In the following tables, total loans include loans retained (i.e., held-for-investment); loans held-for-sale; and certain loans accounted for at fair value.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "If we inaccurately estimate demand, or our customers change orders, as we have experienced in the past, we may not be able to reduce our supply commitments in time, at the same rate, or at all.",
+      "truth": "negative",
+      "vader": "neutral"
+    },
+    {
+      "sentence": "Termination penalties are generally not based on fair value measurements.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Third parties may claim that we infringe their intellectual property.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "There was no change in our internal control over financial reporting that occurred during the quarter ended March 31, 2026, which has materially affected, or is reasonably likely to materially affect, our internal control over financial reporting.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Products gross margin and gross margin percentage increased during the second quarter and first six months of 2026 compared to the same periods in 2025 primarily due to a different mix of products and strength in foreign currencies relative to the U.S. dollar, partially offset by higher costs.",
+      "truth": "positive",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Automotive regulatory credits revenue decreased $215 million, or 36%, in the three months ended March 31, 2026 as compared to the three months ended March 31, 2025.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "If there is a security vulnerability in one of these components, and if there is a security exploit targeting it, we could experience adverse impacts to our results of operations, reputation, or competitive position.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The floating interest rate on both hedged tranches will vary with changes in SOFR.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "In addition, under this method deferred taxes are generally not recorded as the investment is now amortized in proportion to the income tax credits and other income tax benefits received.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The Company’s gross margins vary significantly across its products, services, geographic segments and distribution channels and can change over time.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "The Company experiences malicious attacks and other attempts to gain unauthorized access to its systems on a regular basis.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Governments and regulators are also considering, and in certain cases, have imposed restrictions on the hardware, software, and systems used to develop frontier foundation models and generative AI.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "As of March 31, 2026 and December 31, 2025, the allowance for expected credit losses was $24 million and $26 million, respectively.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Refer to the Consolidated average balance sheets, interest and rates schedule on page 169 for additional information.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "(c)In the first quarter of 2026, Risk functions that were previously aligned with the LOBs were centralized into Corporate.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Short-term and long-term future interest payments obligations as of March 31, 2026 were $2.98 billion and $56.27 billion, respectively.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "As of June 30, 2026, we had $14.4 billion of debt, consisting of fixed rate unsecured debt in twelve tranches due between 2026 and 2054.",
+      "truth": "neutral",
+      "vader": "negative"
+    },
+    {
+      "sentence": "Facebook, Inc.) and seek unspecified damages and injunctive relief.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Competition could adversely impact our market share and financial results.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "These competitors may be able to acquire market share and/or prevent us from doing so, more effectively identify and capitalize upon opportunities in new markets and end-user trends, more quickly transition their products, and impinge on our ability to procure sufficient foundry capacity and scarce input materials during a supply-constrained environment, which could harm our business.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Geopolitical instability may lead to sanctions and impact our ability to do business in some markets or with some public-sector customers.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Equity investments that are not recorded at fair value are measured using the equity method of accounting when required or measured at cost with adjustments for observable changes in price or impairments (referred to as the measurement alternative).",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The proportional amortization method requires the cost of eligible investments, within an elected program, be amortized in proportion to the tax benefits received with the resulting amortization reported directly in income tax expense, which aligns with the associated tax credits and other tax benefits.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Recent governmental and regulatory actions have restricted certain regulatory credit programs tied to our products.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Our accounts receivable balances associated with sales of energy storage products are dependent on billing milestones and payment terms negotiated for each contract, and our accounts receivable balances associated with our sales of regulatory credits are dependent on contractual payment terms.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The Company has non-trade receivables from certain of its manufacturing vendors resulting from the sale of components to these vendors who manufacture subassemblies or assemble final products for the Company.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "The change was primarily due to a $3.71 billion increase in proceeds from issuances of debt, partially offset by a $2.23 billion increase in repayments of debt.",
+      "truth": "positive",
+      "vader": "negative"
+    },
+    {
+      "sentence": "The primary components of other income (expense), net are related to equity securities valuations and adjustments, equity warrant valuations, foreign currency, and reclassification adjustments for gains (losses) on available-for-sale debt securities.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "See Item 1 of Part I, “Financial Statements — Note 4 — Commitments and Contingencies” and “Financial Statements — Note 5 — Debt” for additional discussion of our principal contractual commitments, as well as our pledged assets.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Certain agreements include the obligation to license rights for unknown future titles, the ultimate quantity and/or fees for which are not yet determinable as of the reporting date.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "We may not be able to successfully integrate our acquisitions, and we incur significant costs to integrate and support the companies we acquire.",
+      "truth": "negative",
+      "vader": "positive"
+    },
+    {
+      "sentence": "In December 2025, the FASB issued ASU No. 2025-12, Codification Improvements.",
+      "truth": "neutral",
+      "vader": "positive"
+    },
+    {
+      "sentence": "Unregistered Sales of Equity Securities and Use of Proceeds.",
+      "truth": "neutral",
+      "vader": "positive"
+    }
+  ]
+}
