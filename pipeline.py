@@ -77,6 +77,12 @@ def analyse_filing(
             "sentences": scored,
         }
 
+    if not section_analyses:
+        raise ValueError(
+            "Sections were located but no scoreable sentences survived "
+            "filtering — the filing may be table-only or non-standard."
+        )
+
     progress("Generating executive summary…")
     summary = generate_summary(meta, sections_text, section_analyses)
 

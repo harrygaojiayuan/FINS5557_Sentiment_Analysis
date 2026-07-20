@@ -85,6 +85,9 @@ def render_summary(analysis: dict) -> None:
     with left:
         st.markdown("**Overall tone**")
         st.markdown(f"### {TONE_BADGES.get(assessment.get('tone'), '🟡 Mixed')}")
+
+        if assessment.get("tone_basis"):
+            st.caption(assessment["tone_basis"])
     with mid:
         if has_surprise:
             pct = surprise.get("surprise_pct")
@@ -99,7 +102,14 @@ def render_summary(analysis: dict) -> None:
             )
     with right:
         if assessment.get("rationale"):
+            st.markdown("**LLM assessment**")
             st.markdown(f"> {assessment['rationale']}")
+            llm_tone = assessment.get("llm_tone")
+            if llm_tone and llm_tone != assessment.get("tone"):
+                st.caption(
+                    f"Model's own tone read: {llm_tone} — badge uses the "
+                    "deterministic FinBERT score."
+                )
 
     if has_surprise:
         st.caption(
@@ -276,6 +286,13 @@ def main() -> None:
         return
 
     meta = analysis["meta"]
+
+    if filing is not None and meta["accession"] != filing.accession:
+        st.info(
+            "Showing the previous analysis. Click **Analyse filing** to "
+            "analyse the newly selected filing."
+        )
+
     st.header(
         f"{meta['company']} ({meta['ticker']}) — {meta['form']}, "
         f"period ending {meta['report_date']}"

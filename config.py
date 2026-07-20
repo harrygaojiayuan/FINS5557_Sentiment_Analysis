@@ -14,10 +14,7 @@ sec_user_agent = os.getenv(
     'FINS5557 Project contact@example.com' # Default value if SEC_USER_AGENT is blank in .env
 )
 
-SENTIMENT_MODEL = os.getenv(
-    "SENTIMENT_MODEL", # read SENTIMENT_MODEL in .env
-    "ProsusAI/finbert", # Default model if SENTIMENT_MODEL is blank in .env
-)
+SENTIMENT_MODEL = os.getenv("SENTIMENT_MODEL") or "ProsusAI/finbert" # Default model if SENTIMENT_MODEL is blank in .env
 
 # LLM providers. Set the API key for whichever you have
 # Detection priority is Gemini > Anthropic > OpenAI > mock
@@ -27,9 +24,9 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-3.5-flash"
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL") or "claude-haiku-4-5-20251001"
+OPENAI_MODEL = os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
 FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
 
 
