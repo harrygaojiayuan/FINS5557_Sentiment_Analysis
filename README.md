@@ -10,7 +10,7 @@
 </p>
 
 <h4 align="center">
-  Aurthor: Jiayuan Gao, Yu Gu, Zijun Lu,   
+  Author: Jiayuan Gao, Yu Gu, Zijun Lu,   
 </h4>
 
 ## Overview
@@ -159,7 +159,7 @@ Edit `.env` and add the required values:
 SEC_USER_AGENT="10-Q Insight your.email@example.com"
 
 GOOGLE_API_KEY="your-google-api-key"
-GEMINI_MODEL="gemini-2.0-flash"
+GEMINI_MODEL="gemini-3.5-flash"
 
 MAX_SENTENCES_PER_SECTION=300
 
