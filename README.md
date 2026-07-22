@@ -311,8 +311,8 @@ FinBERT fallback.
 
 Developed by:
 
-- Jiayuan Gao, zID: z5598191
-- Yu Gu, zID: z5435605
+- Jiayuan Gao, zID: z5435605
+- Yu Gu, zID: z5598191
 - Zijun Lu, zID: z5370746
 
 ## AI Tool Disclosure
