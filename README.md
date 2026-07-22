@@ -28,13 +28,20 @@ future releases.
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue">
   <img src="https://img.shields.io/badge/Framework-Streamlit-red">
-  <img src="https://img.shields.io/badge/Model-FinBERT-green">
+  <img src="https://img.shields.io/badge/Sentiment Model-FinBERT-green">
   <img src="https://img.shields.io/badge/Data-SEC%20EDGAR-blue">
   <img src="https://img.shields.io/badge/Market%20Data-Finnhub-00BFA6">
 
 ## Live Application
 
-[Open the deployed application](https://github.com/harrygaojiayuan/FINS5557_Sentiment_Analysis.git)
+[Open the deployed application](https://fins5557sentimentanalysis.streamlit.app/)
+
+> **Live deployment configuration:** The deployed Streamlit application is
+> currently configured to use Google Gemini 3.5 Flash (`gemini-3.5-flash`)
+> for LLM-assisted executive summaries. FinBERT (`ProsusAI/finbert`) is used
+> separately for sentence-level financial sentiment analysis. If the Gemini
+> service is unavailable, the application falls back to a deterministic
+> FinBERT-based summary.
 
 ## Features
 
@@ -58,21 +65,7 @@ future releases.
 
 ## System Architecture
 
-<div align="center">
-<pre>
-User Ticker
-     ↓
-SEC EDGAR API
-     ↓
-Section Parser
-     ↓
-FinBERT Sentiment Analysis
-     ↓
-LLM Executive Summary
-     ↓
-Streamlit Dashboard
-</pre>
-</div>
+![System Architecture](Photo/system_architecture.png)
 
 ## Installation
 
@@ -193,26 +186,49 @@ http://localhost:8501
    - JSON Export
 
 ### Worked Example
+Typical User Interface is as below:
 
-For example, enter:
+<p align="center">
+  <img src="Photo/initial_ui.png"
+       alt="User interface"
+       width="800">
+</p>
 
-```text
-AAPL
-```
-
-Select the latest available 10-Q and click **Analyse filing**. The application
+Enter AAPL, for example, and press enter to apply. Select a recent 10-Q from the dropdown menu and click **Analyse filing**. The application
 will display section-level positive, neutral and negative sentiment, together
 with an executive summary and supporting source sentences.
 
-## Screenshots
+<p align="center">
+  <img src="Photo/analyse.png"
+       alt="Analyse filing"
+       width="800">
+</p>
 
-### Filing Selection
+## Screenshots
 
 ### Executive Summary
 
+<p align="center">
+  <img src="Photo/executive_summary.png"
+       alt="Executive Summary"
+       width="800">
+</p>
+
 ### Section Sentiment
 
+<p align="center">
+  <img src="Photo/section_sentiment.png"
+       alt="Section Sentiment"
+       width="800">
+</p>
+
 ### Evidence Explorer
+
+<p align="center">
+  <img src="Photo/evidence_explorer.png"
+       alt="Evidence Explorer"
+       width="800">
+</p>
 
 ## Sentiment Methodology
 Each extracted sentence is classified by FinBERT as positive, neutral or
@@ -288,7 +304,6 @@ FinBERT fallback.
 - Compare sentiment across consecutive quarters
 - Detect newly introduced risk factors
 - Add automated tests for section parsing and summary validation
-- Compare FinBERT with a financial-dictionary baseline
 - Validate LLM evidence against the original filing text
 - Support additional filing types such as 10-K
 
@@ -310,7 +325,8 @@ powered by Fable 5 model** as AI coding and documentation assistant during devel
 Claude Code was used for the following tasks: 
 - Project scoping and planning
 - Project architecture and design advice
-- Coding assistance and integration guidance
+- Coding assistance with ETL, feature engineering, and model design
+- Streamlit integration guidance
 - Debugging assistance
 - Testing and verification
 
