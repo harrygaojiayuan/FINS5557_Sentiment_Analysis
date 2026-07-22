@@ -338,23 +338,47 @@ Codex was used for the following tasks:
 - Drafting and refining selected sections of the README
 - Improving Markdown and HTML formatting used in the project documentation
 
-All AI-generated suggestions were reviewed, tested and, where necessary,
+The following code files were edited with help of AI:
+
+| File                  | AI Model                                                                 | AI responsibility                                                                            |
+|-----------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------| 
+| config.py             | Anthropic Claude Code Fable 5                                            | Helped with model call priority bug fixing                                                   |
+| sec_edgar.py          | Anthropic Claude Code Fable 5                                            | Helped with accessing filing from SEC EDGAR                                                  |
+| section_parser.py     | Anthropic Claude Code Fable 5                                            | Helped with parsing HTML filing documents, and sentence extraction                           |
+| sentiment.py          | Anthropic Claude Code Fable 5                                            | Helped with deterministic tone, and bug fixing                                               |
+| summariser.py         | Anthropic Claude Code Fable 5                                            | Helped with prompt construction, model coordination, rationale, and summary generation       |
+| pipeline.py           | Anthropic Claude Code Fable 5                                            | Helped with setting up the pipeline                                                          |
+| market_data.py        | Anthropic Claude Code Fable 5                                            | Helped with accession of data from Finnhub through API                                       |
+| evaluation.py         | Anthropic Claude Code Fable 5                                            | Helped with evaluation for sentiment models, and bug fix                                     |
+| threshold_analysis.py | Anthropic Claude Code Fable 5                                            | Helped with threshold evaluation and bug fix                                                 |
+| performance_test.py   | OpenAI Codex GPT 5.6 Sol, and  <br/> Anthropic Claude Code Fable 5       | GPT 5.6 helped with idea generation, and Fable 5 helped with testing application performance |
+| app.py                | Anthropic Claude Code Fable 5                                            | Helped with streamlit integration and bug fix                                                |
+
+All AI-generated suggestions and content were reviewed, tested and, where necessary,
 modified by the project team. The team retained responsibility for the final
 code, system design, analysis, documentation and submitted work. AI-generated
 content was not accepted without human verification.
 
 ### AI Models Integrated into the Application
 
-The application itself supports the following AI models:
+The application itself supports the following AI models for users:
 
-| Provider / Organisation | Model                       | Role in the Application |
-|---|-----------------------------|---|
-| Prosus AI, distributed through Hugging Face | `ProsusAI/finbert`          | Performs sentence-level financial sentiment classification and returns positive, neutral and negative probabilities |
-| Google | `gemini-3.5-flash`          | Optionally generates the structured executive summary from filing text and FinBERT results |
-| Anthropic | `claude-haiku-4-5-20251001` | Optional alternative model for generating the structured executive summary |
-| OpenAI | `gpt-4o-mini`               | Optional alternative model for generating the structured executive summary |
+| Provider / Organisation | Model              | Role in the Application                                                                                             |
+|---|--------------------|---------------------------------------------------------------------------------------------------------------------|
+| Prosus AI, distributed through Hugging Face | `ProsusAI/finbert` | Performs sentence-level financial sentiment classification and returns positive, neutral and negative probabilities |
+| Google | `Any`              | Generates the structured executive summary from filing text and FinBERT results                                     |
+| Anthropic | `Any`              | Alternative provider for generating the structured executive summary                                                |
+| OpenAI | `Any`              | Alternative provider for generating the structured executive summary                                                |
 
-Only one LLM provider is used for each analysis. When multiple API keys are
+Although the LLM models could be configured to any models developed by
+Google, Anthropic and OpenAI with a valid API key, for development of the application,
+the following models were originally adopted for testing executive summary generation
+
+1. Google: gemini-3.5-flash
+2. Anthropic: claude-haiku-4-5-20251001
+3. OpenAI: gpt-4o-mini
+
+Only one LLM model is used for each analysis. When multiple API keys are
 configured, the application selects a provider in the following order:
 
 1. Google Gemini
